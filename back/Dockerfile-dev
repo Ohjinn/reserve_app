@@ -1,0 +1,18 @@
+FROM openjdk:17 AS builder
+  # xargs 에러 해결을 위한 install
+RUN microdnf install findutils
+
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
+COPY src src
+RUN chmod +x ./gradlew
+RUN ./gradlew bootJar
+
+FROM openjdk:17
+COPY --from=builder build/libs/*.jar app.jar
+
+ENV TZ=Asia/Seoul
+ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-jar", "app.jar"]
+VOLUME /tmp

@@ -1,0 +1,47 @@
+version: "3.9"
+services:
+  database:
+    container_name: mysql-reserve
+    image: mysql:8.0.30
+    platform: linux/x86_64
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: reserve_mysql
+      MYSQL_USER: reserve
+      MYSQL_PASSWORD: password
+      TZ: Asia/Seoul
+    volumes:
+      - ./db/data:/var/lib/mysql
+      - ./db/config:/etc/mysql/conf.d
+      - ./db/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 3s
+      timeout: 20s
+      retries: 10
+    networks:
+      - dev-network
+
+  application:
+    container_name: server
+    restart: always
+    build:
+      dockerfile: Dockerfile-dev
+    ports:
+      - "8000:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-reserve:3306/reserve_mysql?allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: "reserve"
+      SPRING_DATASOURCE_PASSWORD: "password"
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - dev-network
+    command: ./gradlew bootRun
+
+networks:
+  dev-network:
