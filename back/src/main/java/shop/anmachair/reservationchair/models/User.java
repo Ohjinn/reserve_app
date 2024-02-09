@@ -3,15 +3,15 @@ package shop.anmachair.reservationchair.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "user")
 public class User extends CreateTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ID")
+    @Column(name = "userId")
     private Integer id;
 
-    @Column(name = "USER_NAME", nullable = false, length = 20)
+    @Column(name = "userName", nullable = false, length = 20)
     private String userName;
 
     public User() {

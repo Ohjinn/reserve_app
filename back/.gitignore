@@ -35,3 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Docker 볼륨 설정 위한 예외 ###
+db/**
+!db/config/
+!db/data
+!db/init
+!.gitkeepgit

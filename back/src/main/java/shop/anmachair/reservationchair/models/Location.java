@@ -3,28 +3,29 @@ package shop.anmachair.reservationchair.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "LOCATION")
+@Table(name = "location")
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "LOCATION_ID")
+    @Column(name = "locationId")
     private Integer id;
 
-    private String locationId;
+    @Column(name = "locationName", nullable = false, length = 45)
+    private String locationName;
 
     public Location() {
     }
 
-    public Location(Integer id, String locationId) {
+    public Location(Integer id, String locationName) {
         this.id = id;
-        this.locationId = locationId;
+        this.locationName = locationName;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public String getLocationId() {
-        return locationId;
+    public String getLocationName() {
+        return locationName;
     }
 }

@@ -5,32 +5,37 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "RESERVATION")
+@Table(name = "reservation")
 public class Reservation extends CreateTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "RESERVATION_ID")
+    @Column(name = "reservationId")
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "userId")
     private User user;
 
     private LocalDateTime reservationDateTime;
 
     @ManyToOne
-    @JoinColumn(name = "CHAIR_ID")
+    @JoinColumn(name = "chairId")
     private Chair chair;
+
+    @ManyToOne
+    @JoinColumn(name = "locationId")
+    private Location location;
 
     public Reservation() {
     }
 
-    public Reservation(Integer id, User user, LocalDateTime reservationDateTime, Chair chair) {
+    public Reservation(Integer id, User user, LocalDateTime reservationDateTime, Chair chair, Location location) {
         this.id = id;
         this.user = user;
         this.reservationDateTime = reservationDateTime;
         this.chair = chair;
+        this.location = location;
     }
 
     public Integer getId() {
@@ -47,5 +52,9 @@ public class Reservation extends CreateTimeEntity{
 
     public Chair getChair() {
         return chair;
+    }
+
+    public Location getLocation() {
+        return location;
     }
 }
