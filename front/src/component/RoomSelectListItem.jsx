@@ -10,7 +10,7 @@ const RoomSelectListItem = ({
   return (
     <div
       style={{
-        border: isSelect === locationId ? "2px solid" : "1px solid",
+        border: isSelect === locationId ? "2px solid black" : "1px solid black",
         borderRadius: "20px",
         padding: "10px 20px",
         display: "flex",
@@ -25,8 +25,8 @@ const RoomSelectListItem = ({
       }}
     >
       <div>
-        <p style={{ fontWeight: "800", fontSize: "25px", margin: "0" }}>방배</p>
-        <p style={{ margin: 0 }}>{locationName}</p>
+        <p style={{ fontWeight: "800", fontSize: "25px", margin: "0", color: "black" }}>방배</p>
+        <p style={{ margin: 0, color: "black" }}>{locationName}</p>
       </div>
       {isSelect === locationId && <img src={SelectCircle} />}
       {isSelect !== locationId && <img src={Circle} />}

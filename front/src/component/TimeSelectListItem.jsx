@@ -29,6 +29,7 @@ const TimeSelectListItem = ({item, isSelect, setIsSelect}) => {
           justifyContent: "center",
           alignItems: "center",
           display: "flex",
+          color: "black"
         }}
         onClick={() => {
           setIsSelect(item.time);
