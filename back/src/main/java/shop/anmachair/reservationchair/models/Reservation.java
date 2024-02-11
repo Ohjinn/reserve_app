@@ -57,4 +57,50 @@ public class Reservation extends CreateTimeEntity{
     public Location getLocation() {
         return location;
     }
+
+    public static class Builder {
+        private Integer id;
+        private User user;
+        private LocalDateTime reservationDateTime;
+        private Chair chair;
+        private Location location;
+
+        public Builder() {
+        }
+
+        public Builder id(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder user(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public Builder reservationDateTime(LocalDateTime reservationDateTime) {
+            this.reservationDateTime = reservationDateTime;
+            return this;
+        }
+
+        public Builder chair(Chair chair) {
+            this.chair = chair;
+            return this;
+        }
+
+        public Builder location(Location location) {
+            this.location = location;
+            return this;
+        }
+
+        public Reservation build() {
+            Reservation reservation = new Reservation();
+            reservation.id = this.id;
+            reservation.user = this.user;
+            reservation.reservationDateTime = this.reservationDateTime;
+            reservation.chair = this.chair;
+            reservation.location = this.location;
+            return reservation;
+        }
+    }
 }

@@ -1,16 +1,23 @@
 package shop.anmachair.reservationchair.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import shop.anmachair.reservationchair.dtos.ReservationListDto;
+import shop.anmachair.reservationchair.dtos.ReservationRequestDto;
 import shop.anmachair.reservationchair.services.ReservationService;
 
-import java.util.List;
 
 @RestController
-@RequestMapping("reservations")
+@RequestMapping("/reservations")
 public class ReservationController {
+
+    private static final Logger log = LoggerFactory.getLogger(ReservationController.class);
+    private static final Integer userId = 2;
+
     private final ReservationService reservationService;
 
     public ReservationController(ReservationService reservationService) {
@@ -18,11 +25,25 @@ public class ReservationController {
     }
 
     @GetMapping
-    public ReservationListDto list(
+    public ResponseEntity<ReservationListDto> list(
 //            @RequestHeader(value = "Authorization") String token
     ) {
-        String token = "12345";
-        Integer userId = 12345;
-        return reservationService.getReservationList(userId);
+        return ResponseEntity.ok()
+                .body(reservationService.getReservationList(userId));
+    }
+
+    @PostMapping()
+    public ResponseEntity<Integer> create(
+//            @RequestHeader(value = "Authorization") String token
+            @Valid @RequestBody ReservationRequestDto reservationRequestDto
+    ) {
+
+        log.error(String.valueOf(reservationRequestDto));
+
+        Integer reservationId = reservationService
+                .createReservation(userId, reservationRequestDto);
+
+        return ResponseEntity.ok()
+                .body(reservationId);
     }
 }

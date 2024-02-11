@@ -13,6 +13,10 @@ public class Chair {
     @Column(name = "chairName", nullable = false, length = 45)
     private String chairName;
 
+    @ManyToOne
+    @JoinColumn(name = "locationId")
+    private Location location;
+
     public Chair() {
     }
 
