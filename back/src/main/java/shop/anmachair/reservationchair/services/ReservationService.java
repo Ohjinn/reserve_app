@@ -15,6 +15,7 @@ import shop.anmachair.reservationchair.repositories.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,22 +50,32 @@ public class ReservationService {
     public Integer createReservation(Integer userId, ReservationRequestDto reservationRequestDto) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(NoSuchElementException::new);
 
         Chair chair = chairRepository.findById(reservationRequestDto.chairId())
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(NoSuchElementException::new);
 
         Location location = locationRepository.findById(reservationRequestDto.locationId())
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(NoSuchElementException::new);
 
         LocalDateTime now = LocalDateTime.now();
+
         Reservation reservation = new Reservation.Builder()
-                .reservationDateTime(LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), reservationRequestDto.hour(), reservationRequestDto.minute(), 0))
+                .reservationDateTime(LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), reservationRequestDto.hour(), reservationRequestDto.minute()))
                 .user(user)
                 .location(location)
                 .chair(chair)
                 .build();
 
         return reservationRepository.save(reservation).getId();
+    }
+
+    public Integer deleteReservation(Integer reservationId) {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(NoSuchElementException::new);
+
+        reservationRepository.delete(reservation);
+
+        return reservationId;
     }
 }

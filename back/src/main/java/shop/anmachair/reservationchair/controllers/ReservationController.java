@@ -32,7 +32,7 @@ public class ReservationController {
                 .body(reservationService.getReservationList(userId));
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Integer> create(
 //            @RequestHeader(value = "Authorization") String token
             @Valid @RequestBody ReservationRequestDto reservationRequestDto
@@ -45,5 +45,14 @@ public class ReservationController {
 
         return ResponseEntity.ok()
                 .body(reservationId);
+    }
+
+    @DeleteMapping("/{reservationId}")
+    public ResponseEntity<Integer> delete(
+            @PathVariable Integer reservationId
+    ) {
+
+        return ResponseEntity.ok()
+                .body(reservationService.deleteReservation(reservationId));
     }
 }
