@@ -72,6 +72,12 @@ CREATE TABLE IF NOT EXISTS reserve_mysql.time_slot (
     PRIMARY KEY (time_slot_id))
     ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS reserve_mysql.access_token (
+    token VARCHAR(255) NOT NULL,
+    user_id INT NOT NULL,
+    PRIMARY KEY token(token))
+    ENGINE = InnoDB;
+
 
 DELETE FROM time_slot;
 INSERT INTO time_slot (times) VALUES ('09:00:00'), ('09:20:00'), ('09:40:00'), ('10:00:00'), ('10:20:00'), ('10:40:00'), ('11:00:00'), ('11:20:00'), ('11:40:00'), ('12:00:00'), ('12:20:00'), ('12:40:00'), ('13:00:00'), ('13:20:00'), ('13:40:00'), ('14:00:00'), ('14:20:00'), ('14:40:00'), ('15:00:00'), ('15:20:00'), ('15:40:00'), ('16:00:00'), ('16:20:00'), ('16:40:00'), ('17:00:00'), ('17:20:00'), ('17:40:00');
