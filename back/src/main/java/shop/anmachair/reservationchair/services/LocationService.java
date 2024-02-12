@@ -1,13 +1,11 @@
 package shop.anmachair.reservationchair.services;
 
 import org.springframework.stereotype.Service;
-import shop.anmachair.reservationchair.dtos.LocationResponseListDto;
-import shop.anmachair.reservationchair.dtos.LocationSummaryDto;
-import shop.anmachair.reservationchair.dtos.TimeListDto;
-import shop.anmachair.reservationchair.dtos.TimeSummaryDto;
+import shop.anmachair.reservationchair.dtos.*;
 import shop.anmachair.reservationchair.models.Location;
 import shop.anmachair.reservationchair.repositories.LocationRepository;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,5 +32,10 @@ public class LocationService {
     public TimeListDto getTimeList(Integer locationId) {
         List<TimeSummaryDto> availableTimeList = locationRepository.findAvailableTimeList(locationId);
         return new TimeListDto(availableTimeList);
+    }
+
+    public ChairListDto getChairList(Integer locationId, LocalTime convertedTime) {
+        List<ChairSummaryDto> availableChairList = locationRepository.findAvailableChairList(locationId, convertedTime);
+        return new ChairListDto(availableChairList);
     }
 }

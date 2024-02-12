@@ -7,10 +7,12 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import shop.anmachair.reservationchair.dtos.ChairSummaryDto;
 import shop.anmachair.reservationchair.dtos.TimeSummaryDto;
 import shop.anmachair.reservationchair.repositories.customRepository.LocationRepositoryCustom;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import static shop.anmachair.reservationchair.models.QChair.chair;
@@ -52,6 +54,30 @@ public class LocationRepositoryImpl implements LocationRepositoryCustom {
                         .and(reservation.reservationDateTime.minute().eq(timeSlot.times.minute())))
                 .groupBy(timeSlot.timeSlot)
                 .orderBy(timeSlot.timeSlot.id.asc())
+                .fetch();
+    }
+
+    @Override
+    public List<ChairSummaryDto> findAvailableChairList(Integer locationId, LocalTime convertedTime) {
+
+        return queryFactory
+                .select(Projections.constructor(ChairSummaryDto.class,
+                        chair.id,
+                        chair.chairName,
+                        new CaseBuilder()
+                                .when(reservation.id.count().eq(0L))
+                                .then(true)
+                                .otherwise(false)))
+                .from(chair)
+                .leftJoin(reservation)
+                .on(chair.location.id.eq(locationId)
+                        .and(reservation.reservationDateTime.year().eq(LocalDate.now().getYear()))
+                        .and(reservation.reservationDateTime.dayOfYear().eq(LocalDate.now().getDayOfYear()))
+                        .and(reservation.reservationDateTime.hour().eq(convertedTime.getHour()))
+                        .and(reservation.reservationDateTime.minute().eq(convertedTime.getMinute())))
+                .where(chair.location.id.eq(locationId))
+                .groupBy(chair.id, chair.chairName)
+                .orderBy(chair.id.asc())
                 .fetch();
     }
 
