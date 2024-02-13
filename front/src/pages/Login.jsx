@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
 
@@ -22,13 +23,15 @@ const Login = () => {
           <Grid item xs={2}></Grid>
           <Grid item xs={2}></Grid>
           <Grid item xs={8}>
-            <Link to={"/main"}>
-              <img
-                alt="kakaologin"
-                src="kakaoLogin.png"
-                style={{ width: "100%", maxWidth: "100%" }}
-              />
-            </Link>
+          <Button
+              href="/signin"
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              로그인
+            </Button>
           </Grid>
           <Grid item xs={2}></Grid>
         </Grid>

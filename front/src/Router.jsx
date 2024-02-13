@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 import Main from "./pages/Main";
 import MyPage from "./pages/MyPage";
 import RoomSelect from "./pages/RoomSelect";
@@ -12,6 +14,8 @@ const Router = () => {
       {/* <NavVar /> */}
       <Routes>
         <Route path={"/"} element={<Login />} />
+        <Route path={"/signin"} element={<SignIn/>}/>
+        <Route path={"/signup"} element={<SignUp/>}/>
         <Route path={"/main"} element={<Main />} />
         <Route path={"/mypage"} element={<MyPage />} />
         <Route path={"/roomselect"} element={<RoomSelect />} />

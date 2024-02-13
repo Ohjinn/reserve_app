@@ -1,0 +1,25 @@
+import { API_URL } from "../util/path";
+import { defaultFetchOptions } from "../util/option";
+
+export const login = async (id, password) => {
+  try {
+    const response = await fetch(API_URL.LOGIN, {
+      method: "POST",
+      ...defaultFetchOptions,
+      body: JSON.stringify({
+        username: id,
+        password: password,
+      }),
+    })
+      .then((res) => {
+        return { statusCode: res.status, body: res.json() };
+      })
+      .then(async (res) => {
+        return { statusCode: res.statusCode, body: await res.body };
+      });
+    return response;
+  } catch (error) {
+    alert("틀릿다 임마");
+    console.log("로그인 실패 :", error);
+  }
+};
