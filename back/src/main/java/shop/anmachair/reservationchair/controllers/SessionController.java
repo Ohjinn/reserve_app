@@ -1,5 +1,7 @@
 package shop.anmachair.reservationchair.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -15,6 +17,7 @@ public class SessionController {
     private final LoginService loginService;
     private final LogoutService logoutService;
 
+    private static final Logger log = LoggerFactory.getLogger(SessionController.class);
     public SessionController(LoginService loginService,
                              LogoutService logoutService) {
         this.loginService = loginService;
@@ -24,6 +27,7 @@ public class SessionController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public LoginResultDto login(@RequestBody LoginRequestDto loginRequestDto) {
+        log.info("loginRequestDto" + loginRequestDto);
         return loginService.login(
                 loginRequestDto.username(),
                 loginRequestDto.password()
