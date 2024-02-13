@@ -40,11 +40,11 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const onClickLoginButton = async () => {
+  const onClickSignInButton = async () => {
     const result = await login(userId, password);
     console.log(result);
     if (result.statusCode === 201) {
-      localStorage.setItem("isLogin", 1);
+      localStorage.setItem("accessToken", result.body.accessToken);
       navigate("/main");
     } else {
       alert("틀릿다 임마");
@@ -96,7 +96,7 @@ const SignIn = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={onClickLoginButton}
+              onClick={onClickSignInButton}
             >
               로그인
             </Button>

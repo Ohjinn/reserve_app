@@ -1,4 +1,8 @@
-import * as React from 'react';
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+
+import { signup } from "../api/SignUp";
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -28,20 +32,27 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const email = data.get('email');
-    const password = data.get('password');
-    const password_confirm = data.get('password-confirm')
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-      password_confirm: data.get('password-confirm'),
-    });
-    if (password !== password_confirm) {
-        window.alert('비밀번호가 다릅니다.')
+const SignUp = () => {
+  const [userId, setUserId] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const navigate = useNavigate();
+
+  const onClickSignUpButton = async () => {
+    if (!userId || !password || !passwordConfirm) {
+      alert("값을 입력해주세요")
+      return
+    } else if (password !== passwordConfirm) {
+      alert("비밀번호를 확인해주세요")
+    } else {
+      const result = await signup(userId, password);
+      console.log(result);
+      if (result.statusCode === 201) {
+        localStorage.setItem("accessToken", result.body.accessToken);
+        navigate("/main");
+      } else {
+        alert("중복된 아이디 입니다.");
+      }
     }
   };
 
@@ -63,19 +74,20 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             회원가입
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-              <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="아이디"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="아이디"
+                  name="email"
+                  autoComplete="email"
+                  onChange={(e) => setUserId(e.target.value)}
+                  autoFocus
+                />
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -86,6 +98,7 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -97,14 +110,15 @@ export default function SignUp() {
                   type="password"
                   id="password-confirm"
                   autoComplete="new-password"
+                  onChange={(e) => setPasswordConfirm(e.target.value)}
                 />
               </Grid>
             </Grid>
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={onClickSignUpButton}
             >
               회원가입
             </Button>
@@ -122,3 +136,5 @@ export default function SignUp() {
     </ThemeProvider>
   );
 }
+
+export default SignUp;

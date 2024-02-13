@@ -1,5 +1,6 @@
 import Button from "@mui/material/Button";
 import ArrowButton from "../component/ArrowButton";
+import LogoutButton from "../component/LogoutButton";
 
 const Main = () => {
   return (
@@ -12,6 +13,7 @@ const Main = () => {
       }}
     >
       <ArrowButton />
+      <LogoutButton />
       <div style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
         <Button
           href="/roomselect"

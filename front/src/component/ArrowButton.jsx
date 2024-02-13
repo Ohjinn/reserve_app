@@ -9,7 +9,7 @@ const ArrowButton = () => {
         history.back();
       }}
       style={{ marginTop: "50px", marginBottom: "30px", marginLeft: "30px", size: "large" }}
-    ></ArrowBackOutlinedIcon>
+    />
   </>
 };
 
