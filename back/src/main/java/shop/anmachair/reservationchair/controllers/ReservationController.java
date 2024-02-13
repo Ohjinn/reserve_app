@@ -10,14 +10,14 @@ import shop.anmachair.reservationchair.dtos.ReservationListDto;
 import shop.anmachair.reservationchair.dtos.ReservationRequestDto;
 import shop.anmachair.reservationchair.services.ReservationService;
 
+import java.security.Principal;
+
 
 @RestController
 @RequestMapping("/reservations")
 public class ReservationController {
 
     private static final Logger log = LoggerFactory.getLogger(ReservationController.class);
-    private static final Integer userId = 2;
-
     private final ReservationService reservationService;
 
     public ReservationController(ReservationService reservationService) {
@@ -26,22 +26,24 @@ public class ReservationController {
 
     @GetMapping
     public ResponseEntity<ReservationListDto> list(
-//            @RequestHeader(value = "Authorization") String token
+//            @RequestHeader(value = "Authorization") String token,
+            Principal principal
     ) {
+        String name = principal.getName();
         return ResponseEntity.ok()
-                .body(reservationService.getReservationList(userId));
+                .body(reservationService.getReservationList(name));
     }
 
     @PostMapping
     public ResponseEntity<Integer> create(
-//            @RequestHeader(value = "Authorization") String token
+            Principal principal,
             @Valid @RequestBody ReservationRequestDto reservationRequestDto
     ) {
 
-        log.error(String.valueOf(reservationRequestDto));
+        String user = principal.getName();
 
         Integer reservationId = reservationService
-                .createReservation(userId, reservationRequestDto);
+                .createReservation(user, reservationRequestDto);
 
         return ResponseEntity.ok()
                 .body(reservationId);

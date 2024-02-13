@@ -32,14 +32,14 @@ public class ReservationService {
         this.locationRepository = locationRepository;
     }
 
-    public ReservationListDto getReservationList(Integer userId) {
+    public ReservationListDto getReservationList(String userId) {
         List<ReservationSummaryDto> reservations = reservationRepository.findByUserId(userId)
                 .stream()
                 .map(reservation -> new ReservationSummaryDto(
                         reservation.getId(),
                         reservation.getUser().getId(),
                         reservation.getChair().getId(),
-                        reservation.getReservationDateTime(),
+                        reservation.getReservationDatetime(),
                         reservation.getCreatedAt()
                 ))
                 .collect(Collectors.toList());
@@ -47,7 +47,7 @@ public class ReservationService {
         return new ReservationListDto(reservations);
     }
 
-    public Integer createReservation(Integer userId, ReservationRequestDto reservationRequestDto) {
+    public Integer createReservation(String userId, ReservationRequestDto reservationRequestDto) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(NoSuchElementException::new);
@@ -59,6 +59,8 @@ public class ReservationService {
                 .orElseThrow(NoSuchElementException::new);
 
         LocalDateTime now = LocalDateTime.now();
+
+        // TODO: 유저가 해당 시간에 예약했는지 확인하는 로직 추가 필요
 
         Reservation reservation = new Reservation.Builder()
                 .reservationDateTime(LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), reservationRequestDto.hour(), reservationRequestDto.minute()))

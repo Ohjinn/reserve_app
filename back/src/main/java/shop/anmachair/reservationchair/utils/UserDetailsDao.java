@@ -17,16 +17,20 @@ public class UserDetailsDao {
     }
 
     public Optional<UserDetails> findByUsername(String username) {
-        String query = "SELECT user_id FROM user WHERE user_name=?";
+        String query = "SELECT user_id, password, role FROM user WHERE user_name=?";
 
         return jdbcTemplate.query(query, resultSet -> {
             if (!resultSet.next()) {
                 return Optional.empty();
             }
 
-            String id = resultSet.getString("id");
+            String id = resultSet.getString("user_id");
+            String password = resultSet.getString("password");
+            String role = resultSet.getString("role");
 
             UserDetails userDetails = User.withUsername(id)
+                    .password(password)
+                    .authorities(role)
                     .build();
 
             return Optional.of(userDetails);
@@ -43,7 +47,7 @@ public class UserDetailsDao {
 
     public Optional<UserDetails> findByAccessToken(String accessToken) {
         String query = """
-            SELECT user.user_id
+            SELECT user.user_id, user.role
             FROM user
             JOIN access_token On access_token.user_id=user.user_id
             WHERE access_token.token=?
@@ -54,7 +58,7 @@ public class UserDetailsDao {
                 return Optional.empty();
             }
 
-            String id = resultSet.getString("id");
+            String id = resultSet.getString("user_id");
             String role = resultSet.getString("role");
 
             UserDetails userDetails = User.withUsername(id)
@@ -80,12 +84,12 @@ public class UserDetailsDao {
                 jdbcTemplate.query(query, ResultSet::next, username));
     }
 
-    public void addUser(String id, String username) {
+    public void addUser(String id, String username, String encodedPassword) {
         jdbcTemplate.update("""
-                INSERT INTO user (user_id, user_name)
-                VALUES (?, ?)
+                INSERT INTO user (user_id, user_name, password, role)
+                VALUES (?, ?, ?, ?)
                 """,
-                id, username
+                id, username, encodedPassword, "ROLE_USER"
         );
     }
 }

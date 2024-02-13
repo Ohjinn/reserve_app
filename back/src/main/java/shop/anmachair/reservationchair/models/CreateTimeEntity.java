@@ -14,7 +14,7 @@ public class CreateTimeEntity {
 
     //생성 시간
     @CreatedDate
-    @Column(name = "createdAt")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     public LocalDateTime getCreatedAt() {

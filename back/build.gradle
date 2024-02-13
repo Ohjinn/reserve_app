@@ -30,7 +30,9 @@ dependencies {
     // security
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
     implementation 'com.auth0:java-jwt:4.4.0'
+    implementation 'io.hypersistence:tsid:1.1.0'
 
     runtimeOnly 'com.mysql:mysql-connector-j'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -2,6 +2,7 @@ package shop.anmachair.reservationchair.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,10 +17,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true)
-public class SecurityConfig {
+public class WebSecurityConfig {
     private final AccessTokenAuthenticationFilter authenticationFilter;
 
-    public SecurityConfig(AccessTokenAuthenticationFilter authenticationFilter) {
+    public WebSecurityConfig(AccessTokenAuthenticationFilter authenticationFilter) {
         this.authenticationFilter = authenticationFilter;
     }
 
@@ -32,9 +33,10 @@ public class SecurityConfig {
                 authenticationFilter, BasicAuthenticationFilter.class);
 
         http.authorizeHttpRequests()
-//                .requestMatchers(HttpMethod.POST, "/session").permitAll()
-//                .requestMatchers(HttpMethod.POST, "/users").permitAll()
-//                .requestMatchers(HttpMethod.GET, "/products").permitAll()
+                .requestMatchers(HttpMethod.POST, "/session").permitAll()
+                .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                .requestMatchers(HttpMethod.GET, "/products").permitAll()
+                .requestMatchers(HttpMethod.GET, "/reservations").permitAll()
                 .anyRequest().authenticated()
                 .and().cors();
 

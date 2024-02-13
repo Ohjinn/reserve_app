@@ -7,14 +7,14 @@ import jakarta.persistence.*;
 public class Chair {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "chairId")
+    @Column(name = "chair_id")
     private Integer id;
 
-    @Column(name = "chairName", nullable = false, length = 45)
+    @Column(name = "chair_name", nullable = false, length = 45)
     private String chairName;
 
     @ManyToOne
-    @JoinColumn(name = "locationId")
+    @JoinColumn(name = "location_id")
     private Location location;
 
     public Chair() {

@@ -10,21 +10,21 @@ public class Reservation extends CreateTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reservationId")
+    @Column(name = "reservation_id")
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
-    private LocalDateTime reservationDateTime;
+    private LocalDateTime reservationDatetime;
 
     @ManyToOne
-    @JoinColumn(name = "chairId")
+    @JoinColumn(name = "chair_id")
     private Chair chair;
 
     @ManyToOne
-    @JoinColumn(name = "locationId")
+    @JoinColumn(name = "location_id")
     private Location location;
 
     public Reservation() {
@@ -33,7 +33,7 @@ public class Reservation extends CreateTimeEntity{
     public Reservation(Integer id, User user, LocalDateTime reservationDateTime, Chair chair, Location location) {
         this.id = id;
         this.user = user;
-        this.reservationDateTime = reservationDateTime;
+        this.reservationDatetime = reservationDateTime;
         this.chair = chair;
         this.location = location;
     }
@@ -46,8 +46,8 @@ public class Reservation extends CreateTimeEntity{
         return user;
     }
 
-    public LocalDateTime getReservationDateTime() {
-        return reservationDateTime;
+    public LocalDateTime getReservationDatetime() {
+        return reservationDatetime;
     }
 
     public Chair getChair() {
@@ -97,7 +97,7 @@ public class Reservation extends CreateTimeEntity{
             Reservation reservation = new Reservation();
             reservation.id = this.id;
             reservation.user = this.user;
-            reservation.reservationDateTime = this.reservationDateTime;
+            reservation.reservationDatetime = this.reservationDateTime;
             reservation.chair = this.chair;
             reservation.location = this.location;
             return reservation;
