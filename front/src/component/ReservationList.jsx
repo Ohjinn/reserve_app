@@ -1,11 +1,10 @@
-import { DUMMY_DATA } from "../util/reserve";
 import ReservationListItem from "./ReservationListItem";
 
-const ReservationList = () => {
+const ReservationList = ({item}) => {
   return (
     <div style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
-      {DUMMY_DATA.map((item) => (
-        <ReservationListItem key={item.reserveId} item={item} />
+      {item.map((item) => (
+        <ReservationListItem key={item.reservationId} item={item} />
       ))}
     </div>
   );

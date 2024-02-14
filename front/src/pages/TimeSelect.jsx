@@ -1,11 +1,33 @@
+import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ArrowButton from "../component/ArrowButton";
 import BlackButton from "../component/BlackButton";
 import TimeSelectList from "../component/TimeSelectList";
+import { time } from "../api/Time";
 
 const TimeSelect = () => {
   const [isSelect, setIsSelect] = useState();
-  useEffect(() => console.log(isSelect), [isSelect]);
+  const [data, setData] = useState();
+  const location = useLocation(); // location 객체를 가져옵니다.
+
+  // useEffect(() => console.log(isSelect), [isSelect]);
+  useEffect(() => {
+    if (location.state) {
+      const locationId = location.state.isSelect;
+      time(locationId).then((res) => {
+        let updatedData = res.body.map((item) => {
+          let parts = item.time.split(":");
+          let newTime = parts[0] + ":" + parts[1];
+          return {
+            ...item,
+            time: newTime,
+          };
+        });
+        setData(updatedData);
+      });
+    }
+  }, [location]);
+
   return (
     <div
       style={{
@@ -28,7 +50,11 @@ const TimeSelect = () => {
         >
           시간을 선택해주세요
         </p>
-        <TimeSelectList isSelect={isSelect} setIsSelect={setIsSelect} />
+        <TimeSelectList
+          data={data}
+          isSelect={isSelect}
+          setIsSelect={setIsSelect}
+        />
       </div>
       {isSelect ? (
         <BlackButton
@@ -36,6 +62,12 @@ const TimeSelect = () => {
           link={"/chairselect"}
           linkTrue={true}
           buttonColor={"#000000"}
+          object={{
+            state: {
+              locationId: location.state.isSelect,
+              selectedTime: isSelect,
+            },
+          }}
         />
       ) : (
         <BlackButton

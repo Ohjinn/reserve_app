@@ -12,7 +12,6 @@ const Main = () => {
         height: "100vh",
       }}
     >
-      <ArrowButton />
       <LogoutButton />
       <div style={{ display: "flex", flexDirection: "column", margin: "10px" }}>
         <Button
@@ -26,6 +25,7 @@ const Main = () => {
             borderColor: "gray",
             ":hover": { borderColor: "black" },
             margin: "1vh",
+            borderRadius: "10px"
           }}
         >
           예약하기
@@ -41,6 +41,7 @@ const Main = () => {
             borderColor: "gray",
             ":hover": { borderColor: "black" },
             margin: "1vh",
+            borderRadius: "10px"
           }}
         >
           예약관리

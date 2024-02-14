@@ -2,10 +2,17 @@ import { useEffect, useState } from "react";
 import ArrowButton from "../component/ArrowButton";
 import RoomSelectListItem from "../component/RoomSelectListItem";
 import BlackButton from "../component/BlackButton";
+import { location } from "../api/Locations";
 
 const RoomSelect = () => {
   const [isSelect, setIsSelect] = useState();
-  useEffect(() => console.log(isSelect), [isSelect]);
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    location().then((res) => setData(res.body));
+    console.log("data", data);
+  }, []);
+
   return (
     <div
       style={{
@@ -39,26 +46,24 @@ const RoomSelect = () => {
         </p>
         {/* {api_data.map(item =>)} */}
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-          <RoomSelectListItem
-            locationId="1"
-            locationName="방배 3층 남자휴게실"
-            isSelect={isSelect}
-            setIsSelect={setIsSelect}
-          />
-          <RoomSelectListItem
-            locationId="3"
-            locationName="방배 2층 남자휴게실"
-            isSelect={isSelect}
-            setIsSelect={setIsSelect}
-          />
+          {data?.map((item) => (
+            <RoomSelectListItem
+              key={item.locationId}
+              locationId={item.locationId}
+              locationName={item.locationName}
+              isSelect={isSelect}
+              setIsSelect={setIsSelect}
+            />
+          ))}
         </div>
       </div>
       {isSelect ? (
         <BlackButton
           content={"다음"}
-          link={"/timeselect"}
-          linkTrue={true}
           buttonColor={"#000000"}
+          linkTrue={true}
+          link={"/timeselect"}
+          object={{ state: { isSelect: isSelect } }}
         />
       ) : (
         <BlackButton

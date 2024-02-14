@@ -47,7 +47,7 @@ const SignIn = () => {
       localStorage.setItem("accessToken", result.body.accessToken);
       navigate("/main");
     } else {
-      alert("틀릿다 임마");
+      alert("서버에 문제가 있습니다. 잠시 후 시도해주세요");
     }
   };
 

@@ -1,10 +1,24 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import ArrowButton from "../component/ArrowButton";
 import BlackButton from "../component/BlackButton";
+import NewBlackButton from "../component/NewBlackButton";
 import ChairSelectList from "../component/ChairSelectList";
+import { chair } from "../api/Chair";
 
 const ChairSelect = () => {
   const [isSelect, setIsSelect] = useState();
+  const [data, setData] = useState();
+  const location = useLocation(); // location 객체를 가져옵니다.
+
+  // location.state가 정의되어 있을 때만 locationId와 selectedTime을 가져옵니다.
+  const locationId = location.state?.locationId;
+  const selectedTime = location.state?.selectedTime;
+
+  useEffect(() => {
+    chair(locationId, selectedTime).then((res) => setData(res.body));
+  }, []);
+
   return (
     <div
       style={{
@@ -27,16 +41,18 @@ const ChairSelect = () => {
         >
           의자를 선택해주세요
         </p>
-        <img src="map.png" style={{ maxHeight: "400px", maxWidth: "300px", margin:"auto"}} />
-      </div>
-      <ChairSelectList isSelect={isSelect} setIsSelect={setIsSelect} />
-      {isSelect ? (
-        <BlackButton
-          content={"다음"}
-          link={"/chairselect"}
-          linkTrue={true}
-          buttonColor={"#000000"}
+        <img
+          src="map.png"
+          style={{ maxHeight: "400px", maxWidth: "300px", margin: "auto" }}
         />
+      </div>
+      <ChairSelectList
+        data={data}
+        isSelect={isSelect}
+        setIsSelect={setIsSelect}
+      />
+      {isSelect ? (
+        <NewBlackButton content={"예약완료"} buttonColor={"#000000"} link={"/main"}/>
       ) : (
         <BlackButton
           content={"의자를 선택해주세요"}

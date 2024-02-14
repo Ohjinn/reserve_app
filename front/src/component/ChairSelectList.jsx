@@ -1,12 +1,12 @@
-import { DUMMY_CHAIR } from "../util/chairs";
-import TimeSelectListItem from "./TimeSelectListItem";
+import ChairSelectListItem from "./ChairSelectListItem";
 
-const ChairSelectList = ({ isSelect, setIsSelect }) => {
+const ChairSelectList = ({ data, isSelect, setIsSelect }) => {
+  console.log('data', data)
   return (
     <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-      {DUMMY_CHAIR.map((item) => (
-        <TimeSelectListItem
-          key={DUMMY_CHAIR.indexOf(item)}
+      {data?.map((item) => (
+        <ChairSelectListItem
+          key={item.chairName}
           item={item}
           isSelect={isSelect}
           setIsSelect={setIsSelect}

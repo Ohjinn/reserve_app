@@ -48,8 +48,8 @@ const SignUp = () => {
       const result = await signup(userId, password);
       console.log(result);
       if (result.statusCode === 201) {
-        localStorage.setItem("accessToken", result.body.accessToken);
-        navigate("/main");
+        // localStorage.setItem("accessToken", result.body.accessToken);
+        navigate("/signin");
       } else {
         alert("중복된 아이디 입니다.");
       }

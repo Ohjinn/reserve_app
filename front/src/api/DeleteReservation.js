@@ -1,9 +1,9 @@
 import { API_URL } from "../util/path";
 import { defaultFetchOptions } from "../util/option";
 
-export const logout = async () => {
+export const deleteReservation = async (reservationId) => {
   try {
-    const response = await fetch(API_URL.LOGOUT, {
+    const response = await fetch(API_URL.MYPAGE + '/' + reservationId, {
       method: "DELETE",
       ...defaultFetchOptions,
       headers: {
@@ -12,7 +12,8 @@ export const logout = async () => {
       },
       body: JSON.stringify({}),
     });
-    if (response.status === 204) {
+    console.log('response', response);
+    if (response.status === 200) {
       return { statusCode: response.status, body: response };
     } else {
       window.alert("서버에 문제가 생겼습니다.");

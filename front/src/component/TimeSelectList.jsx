@@ -1,12 +1,13 @@
 import { DUMMY_TIME } from "../util/times";
 import TimeSelectListItem from "./TimeSelectListItem";
 
-const TimeSelectList = ({ isSelect, setIsSelect }) => {
+const TimeSelectList = ({ data, isSelect, setIsSelect }) => {
+  // console.log('data', data)
   return (
     <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-      {DUMMY_TIME.map((item) => (
+      {data?.map((item) => (
         <TimeSelectListItem
-          key={DUMMY_TIME.indexOf(item)}
+          key={data.indexOf(item)}
           item={item}
           isSelect={isSelect}
           setIsSelect={setIsSelect}
