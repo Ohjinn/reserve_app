@@ -1,5 +1,7 @@
 package shop.anmachair.reservationchair.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +19,7 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping("/locations")
 public class LocationController {
 
+    private static final Logger log = LoggerFactory.getLogger(LocationController.class);
     private final LocationService locationService;
 
     public LocationController(LocationService locationService) {

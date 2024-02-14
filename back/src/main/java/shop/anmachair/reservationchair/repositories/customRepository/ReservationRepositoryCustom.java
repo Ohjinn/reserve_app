@@ -1,2 +1,10 @@
-package shop.anmachair.reservationchair.repositories.customRepository.implementation;public interface ReservationRepositoryCustom {
+package shop.anmachair.reservationchair.repositories.customRepository;
+
+import shop.anmachair.reservationchair.dtos.ReservationSummaryDto;
+
+import java.util.List;
+
+public interface ReservationRepositoryCustom {
+
+    List<ReservationSummaryDto> findByUserIdLeftJoinLocationChair(String userId);
 }

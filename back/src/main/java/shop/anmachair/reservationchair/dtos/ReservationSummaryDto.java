@@ -5,7 +5,8 @@ import java.time.LocalDateTime;
 public record ReservationSummaryDto(
         Integer reservationId,
         String userId,
-        Integer chairId,
+        String chairName,
+        String locationName,
         LocalDateTime reservationDateTime,
         LocalDateTime createdAt
 ) {

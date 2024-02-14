@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import shop.anmachair.reservationchair.dtos.ReservationListDto;
@@ -30,8 +31,11 @@ public class ReservationController {
             Principal principal
     ) {
         String name = principal.getName();
+        System.out.println("name = " + name);
+        ReservationListDto reservationList = reservationService.getReservationList(name);
+        System.out.println(reservationList.reservations().stream().toString());
         return ResponseEntity.ok()
-                .body(reservationService.getReservationList(name));
+                .body(reservationList);
     }
 
     @PostMapping
@@ -39,12 +43,11 @@ public class ReservationController {
             Principal principal,
             @Valid @RequestBody ReservationRequestDto reservationRequestDto
     ) {
-
         String user = principal.getName();
-
+        log.error(user);
         Integer reservationId = reservationService
                 .createReservation(user, reservationRequestDto);
-
+        log.error("reservationId", reservationId);
         return ResponseEntity.ok()
                 .body(reservationId);
     }
@@ -53,7 +56,6 @@ public class ReservationController {
     public ResponseEntity<Integer> delete(
             @PathVariable Integer reservationId
     ) {
-
         return ResponseEntity.ok()
                 .body(reservationService.deleteReservation(reservationId));
     }

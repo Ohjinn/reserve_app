@@ -24,7 +24,7 @@ public class AccessTokenGenerator {
     public String generate(String userId) {
         return JWT.create()
                 .withClaim("userId", userId)
-                .withExpiresAt(Instant.now().plus(24, ChronoUnit.HOURS))
+                .withExpiresAt(Instant.now().plus(72, ChronoUnit.HOURS))
                 .sign(algorithm);
     }
 

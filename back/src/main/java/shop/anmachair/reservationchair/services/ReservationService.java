@@ -33,18 +33,7 @@ public class ReservationService {
     }
 
     public ReservationListDto getReservationList(String userId) {
-        List<ReservationSummaryDto> reservations = reservationRepository.findByUserId(userId)
-                .stream()
-                .map(reservation -> new ReservationSummaryDto(
-                        reservation.getId(),
-                        reservation.getUser().getId(),
-                        reservation.getChair().getId(),
-                        reservation.getReservationDatetime(),
-                        reservation.getCreatedAt()
-                ))
-                .collect(Collectors.toList());
-
-        return new ReservationListDto(reservations);
+        return new ReservationListDto(reservationRepository.findByUserIdLeftJoinLocationChair(userId));
     }
 
     public Integer createReservation(String userId, ReservationRequestDto reservationRequestDto) {
