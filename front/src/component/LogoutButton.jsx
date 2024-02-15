@@ -7,7 +7,6 @@ const LogoutButton = () => {
 
   const onClickLogoutButton = async () => {
     const result = await logout();
-    console.log(result);
     if (result.statusCode === 204) {
         localStorage.removeItem("accessToken");
         navigate("/")

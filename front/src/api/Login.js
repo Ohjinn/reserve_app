@@ -20,6 +20,6 @@ export const login = async (id, password) => {
     return response;
   } catch (error) {
     alert("아이디 또는 비밀번호가 잘못됐습니다.");
-    console.log("로그인 실패 :", error);
+    ("로그인 실패 :", error);
   }
 };

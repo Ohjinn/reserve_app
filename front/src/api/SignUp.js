@@ -24,6 +24,5 @@ export const signup = async (id, password) => {
     return { statusCode: response.status, body: result };
   } catch (err) {
     alert("처리 중 문제가 생겼습니다.");
-    console.log("회원가입 실패 :", err);
   }
 };

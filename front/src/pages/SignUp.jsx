@@ -46,7 +46,6 @@ const SignUp = () => {
       alert("비밀번호를 확인해주세요")
     } else {
       const result = await signup(userId, password);
-      console.log(result);
       if (result.statusCode === 201) {
         // localStorage.setItem("accessToken", result.body.accessToken);
         navigate("/signin");

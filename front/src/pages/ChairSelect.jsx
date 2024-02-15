@@ -42,7 +42,7 @@ const ChairSelect = () => {
           의자를 선택해주세요
         </p>
         <img
-          src="map.png"
+          src={locationId === 1 ? "map.png" : "map_2.png"}
           style={{ maxHeight: "400px", maxWidth: "300px", margin: "auto" }}
         />
       </div>

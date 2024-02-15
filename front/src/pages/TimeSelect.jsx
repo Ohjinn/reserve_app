@@ -10,7 +10,6 @@ const TimeSelect = () => {
   const [data, setData] = useState();
   const location = useLocation(); // location 객체를 가져옵니다.
 
-  // useEffect(() => console.log(isSelect), [isSelect]);
   useEffect(() => {
     if (location.state) {
       const locationId = location.state.isSelect;

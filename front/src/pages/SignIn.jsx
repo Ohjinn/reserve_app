@@ -42,7 +42,6 @@ const SignIn = () => {
 
   const onClickSignInButton = async () => {
     const result = await login(userId, password);
-    console.log(result);
     if (result.statusCode === 201) {
       localStorage.setItem("accessToken", result.body.accessToken);
       navigate("/main");

@@ -20,6 +20,6 @@ export const location = async () => {
     return { statusCode: response.status, body: locationSummaryDto };
   } catch (err) {
     alert("처리 중 문제가 생겼습니다.");
-    console.log("요청 실패 :", err);
+    ("요청 실패 :", err);
   }
 };

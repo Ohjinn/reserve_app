@@ -10,7 +10,6 @@ const RoomSelect = () => {
 
   useEffect(() => {
     location().then((res) => setData(res.body));
-    console.log("data", data);
   }, []);
 
   return (

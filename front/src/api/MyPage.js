@@ -17,10 +17,8 @@ export const mypage = async () => {
       return;
     }
     const {reservations} = await response.json();
-    console.log('reservations', reservations)
     return { statusCode: response.status, body: reservations };
   } catch (err) {
     alert("처리 중 문제가 생겼습니다.");
-    console.log("요청 실패 :", err);
   }
 };

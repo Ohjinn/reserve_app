@@ -25,7 +25,6 @@ const ReservationListItem = ({ item }) => {
 
     return formattedDateTime;
   };
-  console.log(item);
   return (
     <Card
       sx={{

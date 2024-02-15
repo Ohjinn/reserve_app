@@ -20,10 +20,8 @@ export const time = async (locationId) => {
       return;
     }
     const { timeSummaryDtoList } = await response.json();
-    console.log("timeSummaryDtoList", timeSummaryDtoList)
     return { statusCode: response.status, body: timeSummaryDtoList };
   } catch (err) {
     alert("처리 중 문제가 생겼습니다.");
-    console.log("요청 실패 :", err);
   }
 };

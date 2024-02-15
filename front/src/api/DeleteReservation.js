@@ -12,7 +12,6 @@ export const deleteReservation = async (reservationId) => {
       },
       body: JSON.stringify({}),
     });
-    console.log('response', response);
     if (response.status === 200) {
       return { statusCode: response.status, body: response };
     } else {
@@ -21,6 +20,5 @@ export const deleteReservation = async (reservationId) => {
     }
   } catch (error) {
     alert("처리 중 문제가 생겼습니다.");
-    console.log("로그아웃 실패 :", error);
   }
 };
