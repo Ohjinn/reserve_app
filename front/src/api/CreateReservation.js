@@ -1,20 +1,26 @@
 import { API_URL } from "../util/path";
 import { defaultFetchOptions } from "../util/option";
 
-export const login = async (location, chairId, time) => {
-    const not = time.split(":")
-    console.log("now", not)
+export const createReservation = async (time, location, chairId) => {
+  const timeList = time.split(":");
+  console.log("datas : ", location, chairId, timeList[0], timeList[1])
   try {
     const response = await fetch(API_URL.MYPAGE, {
       method: "POST",
       ...defaultFetchOptions,
+      headers: {
+        ...defaultFetchOptions.headers,
+        Authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
       body: JSON.stringify({
-        location: location,
+        locationId: location,
         chairId: chairId,
-        hour: 
+        hour: timeList[0],
+        minute: timeList[1],
       }),
     })
       .then((res) => {
+        console.log(res)
         return { statusCode: res.status, body: res.json() };
       })
       .then(async (res) => {

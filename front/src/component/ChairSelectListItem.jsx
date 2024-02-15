@@ -1,6 +1,6 @@
 const ChairSelectListItem = ({item, isSelect, setIsSelect}) => {
     return item.possible ? (
-      isSelect === item.chairName ? (
+      isSelect === item.chairId ? (
         // 선택 된 놈
         <div
           style={{
@@ -32,7 +32,7 @@ const ChairSelectListItem = ({item, isSelect, setIsSelect}) => {
             color: "black"
           }}
           onClick={() => {
-            setIsSelect(item.chairName);
+            setIsSelect(item.chairId);
           }}
         >
           {item.chairName}

@@ -52,7 +52,14 @@ const ChairSelect = () => {
         setIsSelect={setIsSelect}
       />
       {isSelect ? (
-        <NewBlackButton content={"예약완료"} buttonColor={"#000000"} link={"/main"}/>
+        <NewBlackButton
+          selectedTime={selectedTime}
+          locationId={locationId}
+          data={isSelect}
+          content={"예약완료"}
+          buttonColor={"#000000"}
+          link={"/main"}
+        />
       ) : (
         <BlackButton
           content={"의자를 선택해주세요"}
